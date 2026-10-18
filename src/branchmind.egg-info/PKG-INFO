@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: branchmind
+Version: 0.1.0
+Summary: DFS-based AI answer filtering and synthesis
+Requires-Python: >=3.10
+Requires-Dist: groq
+Requires-Dist: python-dotenv
