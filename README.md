@@ -87,10 +87,9 @@ Actual searches usually evaluate fewer answers because some branches end early.
 
 ### 1. Clone the repository
 
-Replace `YOUR_USERNAME` with your GitHub username.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/BranchMind.git
+git clone https://github.com/techliam/BranchMind.git
 cd BranchMind
 ```
 
