@@ -93,7 +93,6 @@ git clone https://github.com/techliam/BranchMind.git
 cd BranchMind
 ```
 
-If your repository has a different name, use its actual URL and folder name.
 
 ### 2. Create a virtual environment
 
@@ -141,7 +140,6 @@ GROQ_API_KEY=your_groq_api_key_here
 
 Replace the placeholder with your actual API key.
 
-**Never commit your `.env` file or publish your API key on GitHub.** Make sure `.env` is listed in `.gitignore`.
 
 ### 3. Model configuration
 
