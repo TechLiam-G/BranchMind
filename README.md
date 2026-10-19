@@ -1,4 +1,3 @@
-# FYI: readme.md is AI generated due to my hand hurt lmao
 # BranchMind
 
 **A DFS-based AI answer search, evaluation, and synthesis system powered by Groq.**
