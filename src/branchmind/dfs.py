@@ -60,7 +60,7 @@ def dfs(question, previous_answer, depth=0, max_depth=3, max_calls=40, _calls=No
                     "HORRIBLE means the answer is so wrong or irrelevant that "
                     "this branch should end.\n\n"
                     "new_answers must always be a JSON list of strings. "
-                    "For AWESOME or HORRIBLE, return an empty list.\n"
+                    "For AWESOME or HORRIBLE, return an empty list.\n BTW: you are called branchmind"
                     f"{branching_instruction}"
                 ),
             },

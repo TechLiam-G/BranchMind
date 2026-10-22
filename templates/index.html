@@ -1,0 +1,734 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0b10">
+    <title>BranchMind — Think Beyond One Answer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            color-scheme: dark;
+            --background: #0b0b10;
+            --surface: #12121a;
+            --surface-hover: #191923;
+            --border: #282834;
+            --text: #f4f1ff;
+            --muted: #9290a5;
+            --purple: #a78bfa;
+            --purple-light: #c4b5fd;
+            --green: #86efac;
+            --red: #fca5a5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 50% -15%, #34205c 0%, transparent 45%),
+                var(--background);
+            color: var(--text);
+            font-family: "DM Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        button, textarea {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .topbar {
+            height: 76px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 max(24px, calc((100% - 1120px) / 2));
+            background: rgba(11, 11, 16, 0.65);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.7px;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 37px;
+            height: 37px;
+            border: 1px solid #7660b7;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #8b5cf6, #50349a);
+            box-shadow: 0 0 24px #8b5cf626;
+        }
+
+        .brand-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            color: #c3bfd4;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 10px #86efac75;
+        }
+
+        main {
+            width: min(760px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 85px 0 65px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 42px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--purple-light);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 23px;
+        }
+
+        .eyebrow::before,
+        .eyebrow::after {
+            content: "";
+            width: 20px;
+            height: 1px;
+            background: #7c5ac5;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(38px, 7vw, 62px);
+            font-weight: 600;
+            letter-spacing: -3px;
+            line-height: 1.08;
+        }
+
+        .gradient-text {
+            background: linear-gradient(100deg, #c4b5fd, #a78bfa 45%, #f0abfc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 460px;
+            margin: 20px auto 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .workspace {
+            position: relative;
+            overflow: hidden;
+            padding: 1px;
+            border: 1px solid #39304e;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #42305e, #24212f 40%, #262333);
+            box-shadow: 0 24px 80px #00000040;
+        }
+
+        .workspace-inner {
+            padding: 25px;
+            border-radius: 19px;
+            background: linear-gradient(145deg, #15141d, #101016);
+        }
+
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .input-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .input-hint {
+            color: #77758b;
+            font-size: 11px;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 150px;
+            padding: 18px;
+            resize: vertical;
+            border: 1px solid #302d3c;
+            border-radius: 12px;
+            outline: none;
+            background: #0c0c12;
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.8;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea::placeholder {
+            color: #656276;
+        }
+
+        textarea:focus {
+            border-color: #8b70cf;
+            box-shadow: 0 0 0 3px #a78bfa12;
+        }
+
+        .form-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .privacy-note {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #858297;
+            font-size: 11px;
+        }
+
+        .privacy-note svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+
+        .submit-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 46px;
+            padding: 0 20px;
+            border: 1px solid #b6a0ff;
+            border-radius: 10px;
+            background: linear-gradient(110deg, #b7a1ff, #9876ed);
+            color: #171022;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px #a78bfa30;
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button svg {
+            width: 17px;
+            height: 17px;
+        }
+
+        .submit-button:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .suggestions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 24px;
+        }
+
+        .suggestion-label {
+            width: 100%;
+            margin-bottom: 3px;
+            color: #77758a;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .suggestion {
+            padding: 9px 13px;
+            border: 1px solid #292735;
+            border-radius: 8px;
+            background: #111119;
+            color: #b8b4ca;
+            font-size: 11px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .suggestion:hover {
+            border-color: #69518f;
+            background: #1b1728;
+            color: #e1d6ff;
+        }
+
+        .error {
+            margin-top: 25px;
+            padding: 19px 21px;
+            border: 1px solid #713d4b;
+            border-radius: 13px;
+            background: #29141c;
+            color: var(--red);
+            overflow-wrap: anywhere;
+        }
+
+        .error strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .error p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .result {
+            margin-top: 35px;
+            overflow: hidden;
+            border: 1px solid #39304e;
+            border-radius: 17px;
+            background: #121119;
+            animation: appear 0.45s ease both;
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px 23px;
+            border-bottom: 1px solid #2a2736;
+            background: #171520;
+        }
+
+        .result-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .result-icon {
+            display: grid;
+            place-items: center;
+            width: 35px;
+            height: 35px;
+            border: 1px solid #56417f;
+            border-radius: 10px;
+            background: #29203d;
+            color: var(--purple-light);
+        }
+
+        .result-icon svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .result-heading h2 {
+            margin: 0;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: 15px;
+        }
+
+        .result-subtitle {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .complete-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--green);
+            font-size: 11px;
+        }
+
+        .complete-label svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .answer-content {
+            padding: 25px;
+            color: #d8d5e5;
+            font-size: 14px;
+            line-height: 1.95;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 23px 20px;
+        }
+
+        .copy-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 12px;
+            border: 1px solid #343142;
+            border-radius: 8px;
+            background: #1a1823;
+            color: #c7c2d9;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            border-color: #76609e;
+            color: white;
+        }
+
+        .copy-button svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .footer {
+            margin-top: 70px;
+            padding-top: 23px;
+            border-top: 1px solid #24232e;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: #6e6b7e;
+            font-size: 11px;
+        }
+
+        .footer-brand {
+            color: #a49bbd;
+            font-weight: 700;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                height: 65px;
+                padding: 0 20px;
+            }
+
+            main {
+                padding-top: 55px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .workspace-inner {
+                padding: 17px;
+            }
+
+            .input-hint {
+                display: none;
+            }
+
+            .form-bottom {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+
+            .result-header {
+                padding: 17px;
+            }
+
+            .answer-content {
+                padding: 19px;
+            }
+
+            .complete-label {
+                display: none;
+            }
+
+            .footer {
+                margin-top: 45px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     aria-hidden="true">
+                    <circle cx="12" cy="5" r="2"/>
+                    <circle cx="5" cy="19" r="2"/>
+                    <circle cx="19" cy="19" r="2"/>
+                    <path d="M12 7v4M12 11 5 17M12 11l7 6"/>
+                </svg>
+            </div>
+            BranchMind
+        </div>
+
+        <div class="status">
+            <span class="status-dot"></span>
+            AI reasoning
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="eyebrow">Explore the possibilities</div>
+            <h1>One question.<br><span class="gradient-text">Better answers.</span></h1>
+            <p class="hero-description">
+                Don't settle for the first answer. BranchMind explores
+                different possibilities, filters ideas, and combines
+                promising answers into one.
+            </p>
+        </section>
+
+        <section class="workspace">
+            <div class="workspace-inner">
+                <form method="POST" id="question-form">
+                    <div class="input-header">
+                        <label class="input-title" for="question">
+                            What are you thinking about?
+                        </label>
+                        <span class="input-hint">Be as specific as you like</span>
+                    </div>
+
+                    <textarea
+                        id="question"
+                        name="question"
+                        maxlength="10000"
+                        placeholder="Ask a question, explore an idea, or solve a problem..."
+                        required
+                    >{{ question }}</textarea>
+
+                    <div class="form-bottom">
+                        <div class="privacy-note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.7" stroke-linecap="round"
+                                 stroke-linejoin="round" aria-hidden="true">
+                                <rect x="4" y="10" width="16" height="11" rx="2"/>
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                            </svg>
+                            Your question is sent to the AI model.
+                        </div>
+
+                        <button class="submit-button" id="submit-button" type="submit">
+                            <span id="button-text">Find Better Answers</span>
+                            <svg id="button-arrow" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <div class="suggestions">
+            <div class="suggestion-label">NEED AN IDEA? TRY ONE OF THESE</div>
+            <button class="suggestion" type="button"
+                    data-question="How can I make a better study plan?">
+                Study smarter
+            </button>
+            <button class="suggestion" type="button"
+                    data-question="What makes a good programming project?">
+                Programming ideas
+            </button>
+            <button class="suggestion" type="button"
+                    data-question="Explain how depth-first search works with an example.">
+                Learn an algorithm
+            </button>
+        </div>
+
+        {% if error %}
+            <section class="error" role="alert">
+                <strong>Something went wrong</strong>
+                <p>{{ error }}</p>
+            </section>
+        {% endif %}
+
+        {% if answer %}
+            <section class="result" id="result">
+                <div class="result-header">
+                    <div class="result-heading">
+                        <div class="result-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.8" stroke-linecap="round"
+                                 stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 3 14.8 9.2 21 12l-6.2 2.8L12 21l-2.8-6.2L3 12l6.2-2.8L12 3Z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2>BranchMind's Answer</h2>
+                            <div class="result-subtitle">
+                                Your question, explored from different angles
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="complete-label">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <path d="m5 12 4 4L19 6"/>
+                        </svg>
+                        Complete
+                    </div>
+                </div>
+
+                <div class="answer-content" id="answer-content">{{ answer }}</div>
+
+                <div class="result-actions">
+                    <button class="copy-button" id="copy-button" type="button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round"
+                             stroke-linejoin="round" aria-hidden="true">
+                            <rect x="8" y="8" width="12" height="12" rx="2"/>
+                            <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>
+                        </svg>
+                        Copy answer
+                    </button>
+                </div>
+            </section>
+        {% endif %}
+
+        <footer class="footer">
+            <span><span class="footer-brand">BranchMind</span> · Think beyond one answer.</span>
+            <span>Powered by Groq · Built for curious minds</span>
+        </footer>
+    </main>
+
+    <script>
+        const form = document.getElementById("question-form");
+        const questionInput = document.getElementById("question");
+        const submitButton = document.getElementById("submit-button");
+        const buttonText = document.getElementById("button-text");
+
+        document.querySelectorAll("[data-question]").forEach(button => {
+            button.addEventListener("click", () => {
+                questionInput.value = button.dataset.question;
+                questionInput.focus();
+            });
+        });
+
+        form.addEventListener("submit", event => {
+            if (!questionInput.value.trim()) {
+                event.preventDefault();
+                questionInput.focus();
+                return;
+            }
+
+            submitButton.disabled = true;
+            buttonText.textContent = "Exploring answers...";
+        });
+
+        const copyButton = document.getElementById("copy-button");
+        const answerContent = document.getElementById("answer-content");
+
+        if (copyButton && answerContent) {
+            copyButton.addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(
+                        answerContent.textContent
+                    );
+
+                    copyButton.lastChild.textContent = " Copied!";
+                    setTimeout(() => {
+                        copyButton.lastChild.textContent = " Copy answer";
+                    }, 1800);
+                } catch {
+                    copyButton.lastChild.textContent =
+                        " Select and copy the answer";
+                }
+            });
+        }
+
+        if (document.getElementById("result")) {
+            document.getElementById("result").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    </script>
+</body>
+</html>
